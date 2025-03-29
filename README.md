@@ -1,4 +1,4 @@
-# 3PeopleTrust
+# Color the internet
 ## Idea
 - This application is the smart contract which can be deployed to pallet_contract on substrate.
 - When you sign up, you have to register "real name", "job", "community which you are belong to" & etc.
