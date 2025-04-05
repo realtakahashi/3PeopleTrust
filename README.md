@@ -1,15 +1,31 @@
 # Color the internet
-## Second version
+## 3rd version
 ### Idea
-- The basic philosophy is not changed with first version.
+- The basic philosophy is not changed with 1st version.
+- Additional idea
+  - Providing gas
+    - When people use this dApp, a very few native token is provided by dApp.
+    - When the dApp is deployed, the deployer deposite native tokens.  
+  - This dApp has governance token which represent the value of the power of informations that trusted poepole gather.
+    - When people finish the milesone, the governance tokens are provided.
+      - Milestones
+        - Sign up *2
+        - Create XXX *4
+        - Propose the site *4
+        - Approve the site *2
+        - Vote the site *1   
+---
+## 2nd version
+### Idea
+- The basic philosophy is not changed with 1st version.
 ### Functions
-- The basic functions are not changed with first version.
+- The basic functions are not changed with 1st version.
 - Additional functions
   - "XXX" can be created until the native token(governance token) will be listed on the crpto exchange.
   - When the native token is listed, the election of "XXX" will be held.
     - The group which can not be get the votes will be deleted.  
 ---
-## First version
+## 1st version
 ### Idea
 - This application is the smart contract which can be deployed to pallet_contract on substrate.
 - When you sign up, you have to register "real name", "job", "community which you are belong to" & etc.
