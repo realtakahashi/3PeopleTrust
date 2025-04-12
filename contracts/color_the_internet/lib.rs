@@ -451,13 +451,38 @@ mod color_the_internet {
                 Some(value) => value,
                 None => return Err(Error::TheSiteDoesNotExist),
             };
-            let new_colored_data = ColoredData {
-                url: colored_site.url.clone(),
-                owner_approval: colored_site.owner_approval,
-                second_member_approval: self._is_caller_xxx_second_member(&xxx_data),
-                third_member_approval: self._is_caller_xxx_third_member(&xxx_data),
-                vote_count: colored_site.vote_count,
-            };
+
+            let caller = self.env().caller();
+            let new_colored_data =  
+                if caller == xxx_data.owner {
+                    ColoredData {
+                        url: colored_site.url.clone(),
+                        owner_approval: true,
+                        second_member_approval: colored_site.second_member_approval,
+                        third_member_approval: colored_site.third_member_approval,
+                        vote_count: colored_site.vote_count,
+                    }
+                }
+                else if xxx_data.second_member.is_some() && Some(caller) == xxx_data.second_member {
+                    ColoredData {
+                        url: colored_site.url.clone(),
+                        owner_approval: colored_site.owner_approval,
+                        second_member_approval: true,
+                        third_member_approval: colored_site.third_member_approval,
+                        vote_count: colored_site.vote_count,
+                    }
+                }
+                else {
+                    ColoredData {
+                        url: colored_site.url.clone(),
+                        owner_approval: colored_site.owner_approval,
+                        second_member_approval: colored_site.second_member_approval,
+                        third_member_approval: true,
+                        vote_count: colored_site.vote_count,
+                    }
+                };
+            
+
             self.colored_data_list
                 .insert((xxx_id, colored_id), &new_colored_data);
 
@@ -483,16 +508,22 @@ mod color_the_internet {
         pub fn vote_to_color_the_site(&mut self, xxx_id: u128, colored_id: u128) -> Result<()> {
             let caller = self.env().caller();
             if self._does_the_user_signed_up(caller) == false {
+                ink::env::debug_println!("########## color_the_internet::vote_to_color_the_site:[0]");
                 return Err(Error::TheUserDoesNotSignedUpYet);
             }
             let colored_site = match self.colored_data_list.get((xxx_id, colored_id)) {
                 Some(value) => value,
-                None => return Err(Error::TheSiteDoesNotExist),
+                None => {
+                    ink::env::debug_println!("########## color_the_internet::vote_to_color_the_site:[1]");
+                    return Err(Error::TheSiteDoesNotExist);
+                }
             };
             if self._is_the_target_site_approved(&colored_site) == false {
+                ink::env::debug_println!("########## color_the_internet::vote_to_color_the_site:[2]");
                 return Err(Error::TheTargetSiteIsNotApproved);
             }
             if self.vote_list.get((xxx_id, colored_id, caller)).is_some() {
+                ink::env::debug_println!("########## color_the_internet::vote_to_color_the_site:[3]");
                 return Err(Error::TheUserHasAlreadyVoted);
             }
             let new_colored_data = ColoredData {
@@ -511,7 +542,10 @@ mod color_the_internet {
             let amount = self.governance_token_base_fee.saturating_mul(VOTE);
             match governance_token.transfer(caller, amount) {
                 Ok(_) => (),
-                Err(_) => return Err(Error::CallingGovernanceTokenFunctionFailed),
+                Err(_) => {
+                    ink::env::debug_println!("########## color_the_internet::vote_to_color_the_site:[4]");
+                    return Err(Error::CallingGovernanceTokenFunctionFailed);
+                }
             }
 
             self.env().emit_event(Voted {
@@ -528,9 +562,9 @@ mod color_the_internet {
             if self._is_caller_owner() == false {
                 return Err(Error::OnlyOwnerDoes);
             }
-            if self.is_stopped_creating_xxx_for_listing == true {
-                return Err(Error::CreatingXXXIsAlreadyStopped);
-            }
+            // if self.is_stopped_creating_xxx_for_listing == true {
+            //     return Err(Error::CreatingXXXIsAlreadyStopped);
+            // }
             self.xxx_data_list.remove(xxx_id);
             Ok(())
         }

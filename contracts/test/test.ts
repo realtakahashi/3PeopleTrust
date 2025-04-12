@@ -90,6 +90,21 @@ const test_controller = async () => {
     case 13:
       await approveColorTheSiteByCharlie(test_controller);
       break;
+    case 14:
+      await checkColorTheSiteData(0);
+      await voteToColorTheSite(test_controller);
+      break;
+    case 15:
+      await checkColorTheSiteData(1);
+      await stopCreatingXxxForListing(test_controller);
+      break;
+    case 16:
+      await deleteMariciousXxx(test_controller);
+      break;
+    case 17:
+      await finalCheck();
+      api.disconnect();
+      break;
     default:
       api.disconnect();
       console.log("# End executeAllTest");
@@ -110,6 +125,272 @@ export const executeAllTest = async () => {
   Dave = keyring.addFromUri("//Dave");
 
   await test_controller();
+};
+
+// finalCheck
+const finalCheck = async () => {
+  console.log("## Start finalCheck");
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+
+  var { output } = await contract.query.getXxxDataList(deployer.address, {
+    value: 0,
+    gasLimit: gasLimit,
+    storageDepositLimit,
+  });
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    // console.log("########### json_data:", json_data);
+    assert.equal(json_data.length, 0);
+  }
+
+  // check balance
+  const tokenContract = new ContractPromise(
+    api,
+    GovernanceContractAbi,
+    governanceContractAddress
+  );
+  // balance of Alice
+  var { output } = await tokenContract.query.balanceOf(
+    deployer.address,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+      storageDepositLimit,
+    },
+    deployer.address
+  );
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    console.log("########### Balance of Alice:", json_data);
+    // assert.equal(json_data, 0);
+  }
+  // balance of Bob
+  var { output } = await tokenContract.query.balanceOf(
+    Bob.address,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+      storageDepositLimit,
+    },
+    Bob.address
+  );
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    console.log("########### Balance of Bob:", json_data);
+    // assert.equal(json_data, 0);
+  }
+  // balance of Charlie
+  var { output } = await tokenContract.query.balanceOf(
+    Charlie.address,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+      storageDepositLimit,
+    },
+    Charlie.address
+  );
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    console.log("########### Balance of Charile:", json_data);
+    // assert.equal(json_data, 0);
+  }
+  // balance of Dave
+  var { output } = await tokenContract.query.balanceOf(
+    Dave.address,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+      storageDepositLimit,
+    },
+    Dave.address
+  );
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    console.log("########### Balance of Dave:", json_data);
+    // assert.equal(json_data, 0);
+  }
+
+  console.log("## End finalCheck");
+};
+
+// deleteMariciousXxx
+const deleteMariciousXxx = async (callBack: () => void) => {
+  console.log("## Start deleteMariciousXxx");
+
+  const contractWasm = ColorContract.source.wasm;
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+  const gasLimit: any = api.registry.createType("WeightV2", {
+    refTime: 321923532800,
+    proofSize: 13107200,
+  });
+
+  const xxxId = 0;
+
+  const { gasRequired } = await contract.query.deleteMariciousXxx(
+    deployer.address,
+    { value: 0, gasLimit: gasLimit },
+    xxxId
+  );
+  const tx = await contract.tx.deleteMariciousXxx(
+    { value: 0, gasLimit: gasRequired },
+    xxxId
+  );
+  //@ts-ignore
+  const unsub = await tx.signAndSend(deployer, ({ events = [], status }) => {
+    if (status.isFinalized) {
+      if (checkEventsAndInculueError(events) == true) {
+        console.log("############ Transaction is failure.");
+      }
+      unsub();
+      console.log("## End deleteMariciousXxx");
+      callBack();
+    }
+  });
+};
+
+// stopCreatingXxxForListing
+const stopCreatingXxxForListing = async (callBack: () => void) => {
+  console.log("## Start stopCreatingXxxForListing");
+
+  const contractWasm = ColorContract.source.wasm;
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+  const gasLimit: any = api.registry.createType("WeightV2", {
+    refTime: 321923532800,
+    proofSize: 13107200,
+  });
+
+  const xxxId = 0;
+  const siteId = 0;
+
+  const { gasRequired } = await contract.query.stopCreatingXxxForListing(
+    deployer.address,
+    { value: 0, gasLimit: gasLimit }
+  );
+  const tx = await contract.tx.stopCreatingXxxForListing({
+    value: 0,
+    gasLimit: gasRequired,
+  });
+  //@ts-ignore
+  const unsub = await tx.signAndSend(deployer, ({ events = [], status }) => {
+    if (status.isFinalized) {
+      if (checkEventsAndInculueError(events) == true) {
+        console.log("############ Transaction is failure.");
+      }
+      unsub();
+      console.log("## End stopCreatingXxxForListing");
+      callBack();
+    }
+  });
+};
+
+// voteToColorTheSite
+const voteToColorTheSite = async (callBack: () => void) => {
+  console.log("## Start voteToColorTheSite");
+
+  const contractWasm = ColorContract.source.wasm;
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+  const gasLimit: any = api.registry.createType("WeightV2", {
+    refTime: 321923532800,
+    proofSize: 13107200,
+  });
+
+  const xxxId = 0;
+  const siteId = 0;
+
+  const { gasRequired } = await contract.query.voteToColorTheSite(
+    Dave.address,
+    { value: 0, gasLimit: gasLimit },
+    xxxId,
+    siteId
+  );
+  const tx = await contract.tx.voteToColorTheSite(
+    { value: 0, gasLimit: gasRequired },
+    xxxId,
+    siteId
+  );
+  //@ts-ignore
+  const unsub = await tx.signAndSend(Dave, ({ events = [], status }) => {
+    if (status.isFinalized) {
+      if (checkEventsAndInculueError(events) == true) {
+        console.log("############ Transaction is failure.");
+      }
+      unsub();
+      console.log("## End voteToColorTheSite");
+      callBack();
+    }
+  });
+};
+
+// checkColorTheSiteData
+const checkColorTheSiteData = async (voteCount: Number) => {
+  console.log("## Start checkColorTheSiteData");
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+
+  const xxx_id = 0;
+
+  var { output } = await contract.query.getColoredDataListForXxx(
+    deployer.address,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+      storageDepositLimit,
+    },
+    xxx_id
+  );
+
+  if (output !== undefined && output !== null) {
+    //@ts-ignore
+    let response_json = output.toJSON().ok;
+    let json_data = JSON.parse(JSON.stringify(response_json));
+    // console.log("########### json_data:", json_data);
+    assert.equal(json_data.length, 1);
+    assert.equal(json_data[0].url, "https://realtakahashi-work.medium.com/");
+    assert.equal(json_data[0].ownerApproval, true);
+    assert.equal(json_data[0].secondMemberApproval, true);
+    assert.equal(json_data[0].thirdMemberApproval, true);
+    assert.equal(json_data[0].voteCount, voteCount);
+  }
+
+  console.log("## End checkColorTheSiteData");
 };
 
 // approveColorTheSiteByCharlie
@@ -142,7 +423,7 @@ const approveColorTheSiteByCharlie = async (callBack: () => void) => {
     siteId
   );
   //@ts-ignore
-  const unsub = await tx.signAndSend(Bob, ({ events = [], status }) => {
+  const unsub = await tx.signAndSend(Charlie, ({ events = [], status }) => {
     if (status.isFinalized) {
       if (checkEventsAndInculueError(events) == true) {
         console.log("############ Transaction is failure.");
@@ -184,7 +465,7 @@ const approveColorTheSiteByAlice = async (callBack: () => void) => {
     siteId
   );
   //@ts-ignore
-  const unsub = await tx.signAndSend(Bob, ({ events = [], status }) => {
+  const unsub = await tx.signAndSend(deployer, ({ events = [], status }) => {
     if (status.isFinalized) {
       if (checkEventsAndInculueError(events) == true) {
         console.log("############ Transaction is failure.");
