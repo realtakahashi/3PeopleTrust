@@ -1,46 +1,36 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
-pub use self::governance_token::{
-    GovernanceToken,
-    GovernanceTokenRef,
-};
-
 #[ink::contract]
-mod governance_token {
+pub mod governance_token {
     use ink::{storage::Mapping};
+    use ink::prelude::string::String;
 
     #[ink(storage)]
     pub struct GovernanceToken {
-        /// Total token supply.
-        total_supply: Balance,
-        /// Mapping from owner to number of owned token.
-        balances: Mapping<AccountId, Balance>,
-        /// Mapping of the token amount which an account is allowed to withdraw
-        /// from another account.
-        allowances: Mapping<(AccountId, AccountId), Balance>,
-        /// contract address of color the internet
+        total_supply: u128,
+        balances: Mapping<AccountId, u128>,
+        allowances: Mapping<(AccountId, AccountId), u128>,
         contract_address: AccountId,
+        name: String,
+        symbol: String,
     }
 
-    /// Event emitted when a token transfer occurs.
     #[ink(event)]
     pub struct Transfer {
         #[ink(topic)]
         from: Option<AccountId>,
         #[ink(topic)]
         to: Option<AccountId>,
-        value: Balance,
+        value: u128,
     }
 
-    /// Event emitted when an approval occurs that `spender` is allowed to withdraw
-    /// up to the amount of `value` tokens from `owner`.
     #[ink(event)]
     pub struct Approval {
         #[ink(topic)]
         owner: AccountId,
         #[ink(topic)]
         spender: AccountId,
-        value: Balance,
+        value: u128,
     }
 
     /// The ERC-20 error types.
@@ -49,26 +39,27 @@ mod governance_token {
     #[allow(clippy::cast_possible_truncation)]
     pub enum Error {
         /// Returned if not enough balance to fulfill a request is available.
-        InsufficientBalance,
+        Insufficientu128,
         /// Returned if not enough allowance to fulfill a request is available.
         InsufficientAllowance,
     }
 
-    /// The ERC-20 result type.
     pub type Result<T> = core::result::Result<T, Error>;
 
     impl GovernanceToken {
-        /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
-        pub fn new(total_supply: Balance, contract_address:AccountId) -> Self {
+        pub fn new(name: String, symbol: String, total_supply: u128, contract_address:AccountId) -> Self {
             let mut balances = Mapping::default();
             balances.insert(contract_address, &total_supply);
+            // balances.insert(Self::env().caller(), &total_supply);
             Self::env().emit_event(Transfer {
                 from: None,
                 to: Some(contract_address),
                 value: total_supply,
             });
             Self {
+                name,
+                symbol,
                 total_supply,
                 balances,
                 allowances: Default::default(),
@@ -76,77 +67,83 @@ mod governance_token {
             }
         }
 
-        /// Returns the total token supply.
         #[ink(message)]
-        pub fn total_supply(&self) -> Balance {
+        pub fn total_supply(&self) -> u128 {
             self.total_supply
         }
 
-        /// Returns the account balance for the specified `owner`.
-        ///
-        /// Returns `0` if the account is non-existent.
         #[ink(message)]
-        pub fn balance_of(&self, owner: AccountId) -> Balance {
-            self.balance_of_impl(&owner)
+        pub fn balance_of(&self, owner: AccountId) -> u128 {
+            self.balance_of_impl(owner)
         }
 
-        /// Returns the account balance for the specified `owner`.
-        ///
-        /// Returns `0` if the account is non-existent.
-        ///
-        /// # Note
-        ///
-        /// Prefer to call this method over `balance_of` since this
-        /// works using references which are more efficient in Wasm.
-        #[inline]
-        fn balance_of_impl(&self, owner: &AccountId) -> Balance {
-            self.balances.get(owner).unwrap_or_default()
+        fn balance_of_impl(&self, owner: AccountId) -> u128 {
+            if self.contract_address == owner {
+                ink::env::debug_println!("########## governance_token::balance_of_impl:[0]");
+            }
+            ink::env::debug_println!("########## governance_token::balance_of_impl:[1]");
+            match self.balances.get(owner){
+                Some(value) => {
+                    ink::env::debug_println!("########## governance_token::balance_of_impl:[2] value:{:?}", value);
+                    value
+                },
+                None => {
+                    ink::env::debug_println!("########## governance_token::balance_of_impl:[3]");
+                    0
+                }
+            }
         }
 
-        /// Returns the amount which `spender` is still allowed to withdraw from `owner`.
-        ///
-        /// Returns `0` if no allowance has been set.
         #[ink(message)]
-        pub fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance {
+        pub fn allowance(&self, owner: AccountId, spender: AccountId) -> u128 {
             self.allowance_impl(&owner, &spender)
         }
 
-        /// Returns the amount which `spender` is still allowed to withdraw from `owner`.
-        ///
-        /// Returns `0` if no allowance has been set.
-        ///
-        /// # Note
-        ///
-        /// Prefer to call this method over `allowance` since this
-        /// works using references which are more efficient in Wasm.
-        #[inline]
-        fn allowance_impl(&self, owner: &AccountId, spender: &AccountId) -> Balance {
+        fn allowance_impl(&self, owner: &AccountId, spender: &AccountId) -> u128 {
             self.allowances.get((owner, spender)).unwrap_or_default()
         }
 
-        /// Transfers `value` amount of tokens from the caller's account to account `to`.
-        ///
-        /// On success a `Transfer` event is emitted.
-        ///
-        /// # Errors
-        ///
-        /// Returns `InsufficientBalance` error if there are not enough tokens on
-        /// the caller's account balance.
         #[ink(message)]
-        pub fn transfer(&mut self, to: AccountId, value: Balance) -> Result<()> {
+        pub fn transfer(&mut self, to: AccountId, value: u128) -> Result<()> {
+            ink::env::debug_println!("########## governance_token::transfer:[1] ");
             let from = self.env().caller();
-            self.transfer_from_to(&from, &to, value)
+            // self.transfer_from_to(&from, &to, value)
+
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[1]");
+            let from_balance = self.balance_of_impl(from);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[2] ");
+            if from_balance < value {
+                ink::env::debug_println!("########## governance_token::transfer_from_to:[3] ");
+                return Err(Error::Insufficientu128);
+            }
+            // We checked that from_balance >= value
+            // #[allow(clippy::arithmetic_side_effects)]
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[4]. from_balance:{:?}  value:{:?}", from_balance, value);
+            let sub_balance= match from_balance >= value {
+                #[allow(clippy::arithmetic_side_effects)]
+                true => from_balance - value,
+                false => 0,
+            };
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[5] sub_balance:{:?}", sub_balance);
+            self.balances.insert(&from, &sub_balance);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[6] ");
+            let to_balance = self.balance_of_impl(to);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[7] ");
+            #[allow(clippy::arithmetic_side_effects)]
+            let add_balance = to_balance + value;
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[7] add_balance:{:?}", add_balance);
+            self.balances.insert(to, &add_balance);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[9] ");
+            self.env().emit_event(Transfer {
+                from: Some(from),
+                to: Some(to),
+                value,
+            });
+            Ok(())
         }
 
-        /// Allows `spender` to withdraw from the caller's account multiple times, up to
-        /// the `value` amount.
-        ///
-        /// If this function is called again it overwrites the current allowance with
-        /// `value`.
-        ///
-        /// An `Approval` event is emitted.
         #[ink(message)]
-        pub fn approve(&mut self, spender: AccountId, value: Balance) -> Result<()> {
+        pub fn approve(&mut self, spender: AccountId, value: u128) -> Result<()> {
             let owner = self.env().caller();
             self.allowances.insert((&owner, &spender), &value);
             self.env().emit_event(Approval {
@@ -157,33 +154,19 @@ mod governance_token {
             Ok(())
         }
 
-        /// Transfers `value` tokens on the behalf of `from` to the account `to`.
-        ///
-        /// This can be used to allow a contract to transfer tokens on ones behalf and/or
-        /// to charge fees in sub-currencies, for example.
-        ///
-        /// On success a `Transfer` event is emitted.
-        ///
-        /// # Errors
-        ///
-        /// Returns `InsufficientAllowance` error if there are not enough tokens allowed
-        /// for the caller to withdraw from `from`.
-        ///
-        /// Returns `InsufficientBalance` error if there are not enough tokens on
-        /// the account balance of `from`.
         #[ink(message)]
         pub fn transfer_from(
             &mut self,
             from: AccountId,
             to: AccountId,
-            value: Balance,
+            value: u128,
         ) -> Result<()> {
             let caller = self.env().caller();
             let allowance = self.allowance_impl(&from, &caller);
             if allowance < value {
                 return Err(Error::InsufficientAllowance);
             }
-            self.transfer_from_to(&from, &to, value)?;
+            self.transfer_from_to(from, to, value)?;
             // We checked that allowance >= value
             #[allow(clippy::arithmetic_side_effects)]
             self.allowances
@@ -191,33 +174,40 @@ mod governance_token {
             Ok(())
         }
 
-        /// Transfers `value` amount of tokens from the caller's account to account `to`.
-        ///
-        /// On success a `Transfer` event is emitted.
-        ///
-        /// # Errors
-        ///
-        /// Returns `InsufficientBalance` error if there are not enough tokens on
-        /// the caller's account balance.
         fn transfer_from_to(
             &mut self,
-            from: &AccountId,
-            to: &AccountId,
-            value: Balance,
+            from: AccountId,
+            to: AccountId,
+            value: u128,
         ) -> Result<()> {
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[1]");
             let from_balance = self.balance_of_impl(from);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[2] ");
             if from_balance < value {
-                return Err(Error::InsufficientBalance);
+                ink::env::debug_println!("########## governance_token::transfer_from_to:[3] ");
+                return Err(Error::Insufficientu128);
             }
             // We checked that from_balance >= value
-            #[allow(clippy::arithmetic_side_effects)]
-            self.balances.insert(from, &(from_balance - value));
+            // #[allow(clippy::arithmetic_side_effects)]
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[4]. from_balance:{:?}  value:{:?}", from_balance, value);
+            let sub_balance= match from_balance >= value {
+                #[allow(clippy::arithmetic_side_effects)]
+                true => from_balance - value,
+                false => 0,
+            };
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[5] sub_balance:{:?}", sub_balance);
+            self.balances.insert(from, &sub_balance);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[6] ");
             let to_balance = self.balance_of_impl(to);
-            self.balances
-                .insert(to, &(to_balance.checked_add(value).unwrap()));
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[7] ");
+            #[allow(clippy::arithmetic_side_effects)]
+            let add_balance = to_balance + value;
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[7] add_balance:{:?}", add_balance);
+            self.balances.insert(to, &add_balance);
+            ink::env::debug_println!("########## governance_token::transfer_from_to:[9] ");
             self.env().emit_event(Transfer {
-                from: Some(*from),
-                to: Some(*to),
+                from: Some(from),
+                to: Some(to),
                 value,
             });
             Ok(())
@@ -237,7 +227,7 @@ mod governance_token {
             event: &ink::env::test::EmittedEvent,
             expected_from: Option<AccountId>,
             expected_to: Option<AccountId>,
-            expected_value: Balance,
+            expected_value: u128,
         ) {
             let decoded_event = <Transfer as ink::scale::Decode>::decode(&mut &event.data[..])
                 .expect("encountered invalid contract event data buffer");
@@ -248,7 +238,7 @@ mod governance_token {
 
             let mut expected_topics = Vec::new();
             expected_topics.push(
-                ink::blake2x256!("Transfer(Option<AccountId>,Option<AccountId>,Balance)").into(),
+                ink::blake2x256!("Transfer(Option<AccountId>,Option<AccountId>,u128)").into(),
             );
             if let Some(from) = expected_from {
                 expected_topics.push(encoded_into_hash(from));
@@ -379,7 +369,7 @@ mod governance_token {
             // Bob fails to transfers 10 tokens to Eve.
             assert_eq!(
                 governance_token.transfer(accounts.eve, 10),
-                Err(Error::InsufficientBalance)
+                Err(Error::Insufficientu128)
             );
             // Alice owns all the tokens.
             assert_eq!(governance_token.balance_of(accounts.alice), 100);
@@ -466,7 +456,7 @@ mod governance_token {
             let emitted_events_before = ink::env::test::recorded_events().count();
             assert_eq!(
                 governance_token.transfer_from(accounts.alice, accounts.eve, alice_balance + 1),
-                Err(Error::InsufficientBalance)
+                Err(Error::Insufficientu128)
             );
             // Allowance must have stayed the same
             assert_eq!(

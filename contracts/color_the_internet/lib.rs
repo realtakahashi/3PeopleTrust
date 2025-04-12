@@ -9,11 +9,15 @@ mod color_the_internet {
     const APPROVE: u128 = 4;
     const VOTE: u128 = 1;
 
-    use governance_token::GovernanceTokenRef;
-    use ink::env::emit_event;
+    // const REF_TIME_LIMIT: u64 = 32192353280000000;
+    // const PROOF_SIZE_LIMIT: u64 = 1310720000000;
+    // const STORAGE_DEPOSIT_LIMIT: Balance = 0;
+
+    use governance_token::governance_token::GovernanceTokenRef;
     use ink::prelude::string::String;
     use ink::prelude::vec::Vec;
     use ink::storage::Mapping;
+    use ink::codegen::TraitCallBuilder;
 
     #[derive(Clone)]
     #[cfg_attr(
@@ -88,12 +92,6 @@ mod color_the_internet {
         owner: AccountId,
         name: String,
         tags: String,
-    }
-
-    #[ink(event)]
-    pub struct Stopped_Create_XXX {
-        #[ink(topic)]
-        is_stopped: bool,
     }
 
     #[ink(event)]
@@ -235,10 +233,25 @@ mod color_the_internet {
             let mut governance_token: GovernanceTokenRef =
                 ink::env::call::FromAccountId::from_account_id(self.governance_token_address);
             let amount = self.governance_token_base_fee.saturating_mul(SIGNUP);
+
+            // let call_builder = governance_token.call_mut();
+            // call_builder
+            //     .transfer(caller, amount)
+            //     .ref_time_limit(REF_TIME_LIMIT)
+            //     .proof_size_limit(PROOF_SIZE_LIMIT)
+            //     .storage_deposit_limit(STORAGE_DEPOSIT_LIMIT)
+            //     .invoke();
+
+            // call_builder.transfer(caller, amount).call_v1().invoke();
+
             match governance_token.transfer(caller, amount) {
                 Ok(_) => (),
-                Err(_) => return Err(Error::CallingGovernanceTokenFunctionFailed),
+                Err(_) => {
+                    ink::env::debug_println!("########## color_the_internet::sign_up:[1] ");
+                    return Err(Error::CallingGovernanceTokenFunctionFailed);
+                }
             }
+            ink::env::debug_println!("########## color_the_internet::sign_up:[2] ");
 
             Self::env().emit_event(Signedup {
                 personal_data_id: self.personal_data_id,
@@ -250,6 +263,9 @@ mod color_the_internet {
 
         #[ink(message)]
         pub fn create_xxx(&mut self, name: String, tags: String) -> Result<()> {
+            if self.is_stopped_creating_xxx_for_listing == true {
+                return Err(Error::CreatingXXXIsAlreadyStopped)
+            }
             if self._does_the_user_signed_up(self.env().caller()) == false {
                 return Err(Error::TheUserDoesNotSignedUpYet);
             }
@@ -508,6 +524,18 @@ mod color_the_internet {
         }
 
         #[ink(message)]
+        pub fn delete_maricious_xxx(&mut self, xxx_id: u128) -> Result<()> {
+            if self._is_caller_owner() == false {
+                return Err(Error::OnlyOwnerDoes);
+            }
+            if self.is_stopped_creating_xxx_for_listing == true {
+                return Err(Error::CreatingXXXIsAlreadyStopped);
+            }
+            self.xxx_data_list.remove(xxx_id);
+            Ok(())
+        }
+
+        #[ink(message)]
         pub fn stop_creating_xxx_for_listing(&mut self) -> Result<()> {
             if self.is_stopped_creating_xxx_for_listing == true {
                 return Err(Error::CreatingXXXIsAlreadyStopped);
@@ -515,12 +543,16 @@ mod color_the_internet {
             match self._is_caller_owner() {
                 true => {
                     self.is_stopped_creating_xxx_for_listing = true;
-                    Self::env().emit_event(Stopped_Create_XXX { is_stopped: true });
-                    self.env().emit_event(StoppedToCreateXXX {});
+                    Self::env().emit_event(StoppedToCreateXXX {});
                     Ok(())
                 }
                 false => return Err(Error::OnlyOwnerDoes),
             }
+        }
+
+        #[ink(message)]
+        pub fn get_governance_token_address(&self) -> AccountId {
+            self.governance_token_address
         }
 
         #[ink(message)]
