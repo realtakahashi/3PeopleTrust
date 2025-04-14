@@ -1,0 +1,2859 @@
+{
+  "source": {
+    "hash": "0x74b1ac08e0d5effd2faae57d2c5fb6bb8d558b2167eac2cd99db8e22ed5326e3",
+    "language": "ink! 5.1.1",
+    "compiler": "rustc 1.86.0",
+    "build_info": {
+      "build_mode": "Debug",
+      "cargo_contract_version": "5.0.3",
+      "rust_toolchain": "stable-x86_64-apple-darwin",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "color_the_internet",
+    "version": "0.1.0",
+    "authors": [
+      "[your_name] <[your_email]>"
+    ]
+  },
+  "image": null,
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "label": "governance_toke_fee",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 30
+        },
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 3
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 0
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 51
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 52
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 49
+      },
+      "maxEventTopics": 4,
+      "staticBufferSize": 16384,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 50
+      }
+    },
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "personal_data_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "eoa_address",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "real_name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Signedup",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0xed5f2435bfab6f7c0453ad4acf51182498ff5c09245d0260fb9679bdf295a6c9"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "tags",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "CreatedXXX",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0x91b0fc15d60e09af14f1112725e85af9a5c76d782e162cf3ddaa303802a1c2f9"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "target_member",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "docs": [],
+        "label": "AddedMember",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0xdee27d8bb0629b1386b7690efb0445b2dc49e136e51e173b33e1536e1c401515"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "proposer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "target_url",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ProposedColorTheSite",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0xe7e6f649118f76b4064642b0ad13410a8d02ea42c9845a70ea1aa6525588a1e7"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "approver",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "target_url",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ApprovedColorTheSite",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0x7b11627aa92eb5deeede30a6f7ff670c41a43f552cde1c2f3f88f9384c593725"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "label": "StoppedToCreateXXX",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0x92eaeaa6f7b54a68fe4d65b0a8cd38dc9dc59c3eb8c7383d2a4f2a4ebe6ea84c"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "voter",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "target_url",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Voted",
+        "module_path": "color_the_internet::color_the_internet",
+        "signature_topic": "0x7131ea3e11159b7d28ed0128d970d5b1882d2c0cdd00f96d5eb51fe0fe17e571"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "from",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "to",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "value",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Transfer",
+        "module_path": "governance_token::governance_token",
+        "signature_topic": "0x990df076cb1e9527aa102cd100c1481efe393eeabb5825f9af1f5e58221864de"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "spender",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "value",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "docs": [],
+        "label": "Approval",
+        "module_path": "governance_token::governance_token",
+        "signature_topic": "0x25cdb6c93882e925abbfc9a8b7c85884b73c038c03a2492f238a5e5ba3fbff8c"
+      }
+    ],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 31
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "contract_address",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "set_governance_token_address",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0xd5f42b4e"
+      },
+      {
+        "args": [
+          {
+            "label": "real_name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "job",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "x_account",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "blue_sky_account",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "email_account",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "sign_up",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x4ad6466e"
+      },
+      {
+        "args": [
+          {
+            "label": "name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "tags",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "create_xxx",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x28be9ae6"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "target_member",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "add_second_member",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x161619b9"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "target_member",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "add_third_member",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0xdc41e3a1"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "target_url",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "propose_color_the_site",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x295d2f2d"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "approve_color_the_site",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x1682db8b"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "vote_to_color_the_site",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0xe9c08a41"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "delete_maricious_xxx",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x01dd4796"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "stop_creating_xxx_for_listing",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 32
+        },
+        "selector": "0x68c0ec23"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_governance_token_address",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 35
+        },
+        "selector": "0x7836949d"
+      },
+      {
+        "args": [
+          {
+            "label": "target_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_personal_data",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 36
+        },
+        "selector": "0xe99e5264"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_personal_data_list",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 38
+        },
+        "selector": "0x5bcc5bdb"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_xxx_data",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 40
+        },
+        "selector": "0xd74e63d7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_xxx_data_list",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 42
+        },
+        "selector": "0xc0647808"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "colored_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_colored_data",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 44
+        },
+        "selector": "0xf0d8f288"
+      },
+      {
+        "args": [
+          {
+            "label": "xxx_id",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_colored_data_list_for_xxx",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 46
+        },
+        "selector": "0x41228cfc"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_colored_data_list",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 46
+        },
+        "selector": "0xe9df62e8"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_owner",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 35
+        },
+        "selector": "0x07fcd0b1"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_is_stopped_creating_xxx_for_listing",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 48
+        },
+        "selector": "0xb154f127"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "personal_data_id"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xeb9ad23c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "real_name"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xeb9ad23c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "job"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xeb9ad23c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "x_account"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xeb9ad23c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "blue_sky_account"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xeb9ad23c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "email_account"
+                        }
+                      ],
+                      "name": "PersonData"
+                    }
+                  },
+                  "root_key": "0xeb9ad23c",
+                  "ty": 2
+                }
+              },
+              "name": "personal_data_list"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x9f118a7c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "real_name"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x9f118a7c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "job"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x9f118a7c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "x_account"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x9f118a7c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "blue_sky_account"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x9f118a7c",
+                              "ty": 1
+                            }
+                          },
+                          "name": "email_account"
+                        }
+                      ],
+                      "name": "PersonData"
+                    }
+                  },
+                  "root_key": "0x9f118a7c",
+                  "ty": 11
+                }
+              },
+              "name": "personal_data_list_for_id"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "xxx_id"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x64659afc",
+                              "ty": 1
+                            }
+                          },
+                          "name": "name"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x64659afc",
+                              "ty": 1
+                            }
+                          },
+                          "name": "tags"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x64659afc",
+                              "ty": 3
+                            }
+                          },
+                          "name": "owner"
+                        },
+                        {
+                          "layout": {
+                            "enum": {
+                              "dispatchKey": "0x64659afc",
+                              "name": "Option",
+                              "variants": {
+                                "0": {
+                                  "fields": [],
+                                  "name": "None"
+                                },
+                                "1": {
+                                  "fields": [
+                                    {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x64659afc",
+                                          "ty": 3
+                                        }
+                                      },
+                                      "name": "0"
+                                    }
+                                  ],
+                                  "name": "Some"
+                                }
+                              }
+                            }
+                          },
+                          "name": "second_member"
+                        },
+                        {
+                          "layout": {
+                            "enum": {
+                              "dispatchKey": "0x64659afc",
+                              "name": "Option",
+                              "variants": {
+                                "0": {
+                                  "fields": [],
+                                  "name": "None"
+                                },
+                                "1": {
+                                  "fields": [
+                                    {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x64659afc",
+                                          "ty": 3
+                                        }
+                                      },
+                                      "name": "0"
+                                    }
+                                  ],
+                                  "name": "Some"
+                                }
+                              }
+                            }
+                          },
+                          "name": "third_member"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x64659afc",
+                              "ty": 0
+                            }
+                          },
+                          "name": "colored_site_id"
+                        }
+                      ],
+                      "name": "XXXData"
+                    }
+                  },
+                  "root_key": "0x64659afc",
+                  "ty": 14
+                }
+              },
+              "name": "xxx_data_list"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 1
+                            }
+                          },
+                          "name": "url"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 19
+                            }
+                          },
+                          "name": "owner_approval"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 19
+                            }
+                          },
+                          "name": "second_member_approval"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 19
+                            }
+                          },
+                          "name": "third_member_approval"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 0
+                            }
+                          },
+                          "name": "vote_count"
+                        }
+                      ],
+                      "name": "ColoredData"
+                    }
+                  },
+                  "root_key": "0x8479956e",
+                  "ty": 20
+                }
+              },
+              "name": "colored_data_list"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "leaf": {
+                      "key": "0x45fd447a",
+                      "ty": 19
+                    }
+                  },
+                  "root_key": "0x45fd447a",
+                  "ty": 25
+                }
+              },
+              "name": "vote_list"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "owner"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 19
+                }
+              },
+              "name": "is_stopped_creating_xxx_for_listing"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "governance_token_address"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "governance_token_base_fee"
+            }
+          ],
+          "name": "ColorTheInternet"
+        }
+      },
+      "root_key": "0x00000000",
+      "ty": 29
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "primitive": "str"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 3
+          },
+          {
+            "name": "V",
+            "type": 6
+          },
+          {
+            "name": "KeyType",
+            "type": 7
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 4,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 5
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "real_name",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "job",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "x_account",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "blue_sky_account",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "email_account",
+                "type": 1,
+                "typeName": "String"
+              }
+            ]
+          }
+        },
+        "path": [
+          "color_the_internet",
+          "color_the_internet",
+          "PersonData"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 8
+          },
+          {
+            "name": "R",
+            "type": 9
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "AutoKey"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 10
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 0
+          },
+          {
+            "name": "V",
+            "type": 6
+          },
+          {
+            "name": "KeyType",
+            "type": 12
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 8
+          },
+          {
+            "name": "R",
+            "type": 13
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 10
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 0
+          },
+          {
+            "name": "V",
+            "type": 15
+          },
+          {
+            "name": "KeyType",
+            "type": 17
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "name",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "tags",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "owner",
+                "type": 3,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "second_member",
+                "type": 16,
+                "typeName": "Option<AccountId>"
+              },
+              {
+                "name": "third_member",
+                "type": 16,
+                "typeName": "Option<AccountId>"
+              },
+              {
+                "name": "colored_site_id",
+                "type": 0,
+                "typeName": "u128"
+              }
+            ]
+          }
+        },
+        "path": [
+          "color_the_internet",
+          "color_the_internet",
+          "XXXData"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 8
+          },
+          {
+            "name": "R",
+            "type": 18
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 10
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 21
+          },
+          {
+            "name": "V",
+            "type": 22
+          },
+          {
+            "name": "KeyType",
+            "type": 23
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "url",
+                "type": 1,
+                "typeName": "String"
+              },
+              {
+                "name": "owner_approval",
+                "type": 19,
+                "typeName": "bool"
+              },
+              {
+                "name": "second_member_approval",
+                "type": 19,
+                "typeName": "bool"
+              },
+              {
+                "name": "third_member_approval",
+                "type": 19,
+                "typeName": "bool"
+              },
+              {
+                "name": "vote_count",
+                "type": 0,
+                "typeName": "u128"
+              }
+            ]
+          }
+        },
+        "path": [
+          "color_the_internet",
+          "color_the_internet",
+          "ColoredData"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 8
+          },
+          {
+            "name": "R",
+            "type": 24
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 10
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 26
+          },
+          {
+            "name": "V",
+            "type": 19
+          },
+          {
+            "name": "KeyType",
+            "type": 27
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            0,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "id": 27,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 8
+          },
+          {
+            "name": "R",
+            "type": 28
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 10
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "personal_data_id",
+                "type": 0,
+                "typeName": "<u128 as::ink::storage::traits::AutoStorableHint<::ink::storage\n::traits::ManualKey<2140731530u32, ()>,>>::Type"
+              },
+              {
+                "name": "personal_data_list",
+                "type": 2,
+                "typeName": "<Mapping<AccountId, PersonData> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<1020435179u32,\n()>,>>::Type"
+              },
+              {
+                "name": "personal_data_list_for_id",
+                "type": 11,
+                "typeName": "<Mapping<u128, PersonData> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<2089423263u32,\n()>,>>::Type"
+              },
+              {
+                "name": "xxx_id",
+                "type": 0,
+                "typeName": "<u128 as::ink::storage::traits::AutoStorableHint<::ink::storage\n::traits::ManualKey<2733206679u32, ()>,>>::Type"
+              },
+              {
+                "name": "xxx_data_list",
+                "type": 14,
+                "typeName": "<Mapping<u128, XXXData> as::ink::storage::traits::AutoStorableHint\n<::ink::storage::traits::ManualKey<4237976932u32, ()>,>>::Type"
+              },
+              {
+                "name": "colored_data_list",
+                "type": 20,
+                "typeName": "<Mapping<(u128, u128), ColoredData> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<1855289732u32,\n()>,>>::Type"
+              },
+              {
+                "name": "vote_list",
+                "type": 25,
+                "typeName": "<Mapping<(u128, u128, AccountId), bool> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<2051341637u32,\n()>,>>::Type"
+              },
+              {
+                "name": "owner",
+                "type": 3,
+                "typeName": "<AccountId as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<1395783973u32, ()>,>>::Type"
+              },
+              {
+                "name": "is_stopped_creating_xxx_for_listing",
+                "type": 19,
+                "typeName": "<bool as::ink::storage::traits::AutoStorableHint<::ink::storage\n::traits::ManualKey<2586947818u32, ()>,>>::Type"
+              },
+              {
+                "name": "governance_token_address",
+                "type": 3,
+                "typeName": "<AccountId as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<1014481014u32, ()>,>>::Type"
+              },
+              {
+                "name": "governance_token_base_fee",
+                "type": 0,
+                "typeName": "<Balance as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<673981155u32, ()>,>>::Type"
+              }
+            ]
+          }
+        },
+        "path": [
+          "color_the_internet",
+          "color_the_internet",
+          "ColorTheInternet"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 10
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 33
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 33
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 10
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 34
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 10
+          },
+          {
+            "name": "E",
+            "type": 34
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "TheUserDoesNotSignedUpYet"
+              },
+              {
+                "index": 1,
+                "name": "NameAleadyExists"
+              },
+              {
+                "index": 2,
+                "name": "OnlyOwnerDoes"
+              },
+              {
+                "index": 3,
+                "name": "OnlyXXXOwnerDoes"
+              },
+              {
+                "index": 4,
+                "name": "CreatingXXXIsAlreadyStopped"
+              },
+              {
+                "index": 5,
+                "name": "TheXXXDoesNotExist"
+              },
+              {
+                "index": 6,
+                "name": "TheXXXIsNotWorking"
+              },
+              {
+                "index": 7,
+                "name": "AlreadySetTheMember"
+              },
+              {
+                "index": 8,
+                "name": "CannotSetSameMember"
+              },
+              {
+                "index": 9,
+                "name": "OnlyXXXMembersCanPropose"
+              },
+              {
+                "index": 10,
+                "name": "OnlyXXXMembersCanAgree"
+              },
+              {
+                "index": 11,
+                "name": "AlreadyProposed"
+              },
+              {
+                "index": 12,
+                "name": "TheXXXHasSameSite"
+              },
+              {
+                "index": 13,
+                "name": "TheSiteDoesNotExist"
+              },
+              {
+                "index": 14,
+                "name": "TheTargetSiteIsNotApproved"
+              },
+              {
+                "index": 15,
+                "name": "TheUserHasAlreadyVoted"
+              },
+              {
+                "index": 16,
+                "name": "CallingGovernanceTokenFunctionFailed"
+              }
+            ]
+          }
+        },
+        "path": [
+          "color_the_internet",
+          "color_the_internet",
+          "Error"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 37
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 37
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 34
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
+            "type": 34
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 39
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 6
+          }
+        }
+      }
+    },
+    {
+      "id": 40,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 41
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 41
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 15
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 34
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 15
+          },
+          {
+            "name": "E",
+            "type": 34
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 43
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 43
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 15
+          }
+        }
+      }
+    },
+    {
+      "id": 44,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 45
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 45
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 22
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 34
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 22
+          },
+          {
+            "name": "E",
+            "type": 34
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 47
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 47
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 22
+          }
+        }
+      }
+    },
+    {
+      "id": 48,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 19
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 19
+          },
+          {
+            "name": "E",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 4,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 51,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 52,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
+      }
+    }
+  ],
+  "version": 5
+}
