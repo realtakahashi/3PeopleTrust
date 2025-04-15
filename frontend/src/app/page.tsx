@@ -18,6 +18,7 @@ export default function Home() {
   useEffect(() => {
     if (!api || !isReady) return;
     const _getSignUpData = async () => {
+      console.log("###### _getSignUpData 1");
       if (selectedAccount != null) {
         const personalData = await getSignUpData(
           api,
@@ -37,25 +38,27 @@ export default function Home() {
     // };
 
     // fetchBlock();
-  }, [api, isReady]);
+  }, [api, isReady, selectedAccount]);
 
   return (
     <>
-      <div>
-        <main className="p-8">
-          {/* <h1 className="text-2xl font-bold">Welcome to My Next.js Dapp</h1> */}
-          <AccountSelector />
-          {selectedAccount && (
-            <div className="mt-4 text-green-600">
-              ✅ Selected Address:{" "}
-              <span className="font-mono">{selectedAccount.address}</span>
-            </div>
-          )}
-        </main>
+      <div className="text-center">
+        <div>
+          <main className="p-8">
+            {/* <h1 className="text-2xl font-bold">Welcome to My Next.js Dapp</h1> */}
+            <AccountSelector />
+            {selectedAccount && (
+              <div className="mt-4 text-green-600">
+                ✅ Selected Address:{" "}
+                <span className="font-mono">{selectedAccount.address}</span>
+              </div>
+            )}
+          </main>
+        </div>
       </div>
 
       {selectedAccount != null && signUpData == null && (
-        <div className="p-8">
+        <div className="text-center p-8">
           <Link href="/signup">
             <button className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-green-700 transition-all duration-200">
               Sign up
@@ -64,57 +67,66 @@ export default function Home() {
         </div>
       )}
       {signUpData != null && (
-        <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md border border-gray-200">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-            Personal Profile
-          </h2>
-          <table className="w-full table-auto text-left text-sm text-gray-700">
-            <tbody>
-              <tr className="border-t border-gray-200">
-                <th className="py-2 font-medium w-1/3">Real Name</th>
-                <td className="py-2">{signUpData.realName}</td>
-              </tr>
-              <tr className="border-t border-gray-200">
-                <th className="py-2 font-medium">Job</th>
-                <td className="py-2">{signUpData.job}</td>
-              </tr>
-              <tr className="border-t border-gray-200">
-                <th className="py-2 font-medium">X (Twitter)</th>
-                <td className="py-2 text-blue-500 hover:underline">
-                  <a
-                    href={`https://x.com/${signUpData.xAccount}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    @{signUpData.xAccount}
-                  </a>
-                </td>
-              </tr>
-              <tr className="border-t border-gray-200">
-                <th className="py-2 font-medium">BlueSky</th>
-                <td className="py-2 text-blue-500 hover:underline">
-                  <a
-                    href={`https://bsky.app/profile/${data.blueSkyAccount}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {signUpData.blueSkyAccount}
-                  </a>
-                </td>
-              </tr>
-              <tr className="border-t border-b border-gray-200">
-                <th className="py-2 font-medium">Email</th>
-                <td className="py-2">
-                  <a
-                    href={`mailto:${signUpData.emailAccount}`}
-                    className="text-blue-500 hover:underline"
-                  >
-                    {signUpData.emailAccount}
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md border border-gray-200">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              Personal Profile
+            </h2>
+            <table className="w-full table-auto text-left text-sm text-gray-700">
+              <tbody>
+                <tr className="border-t border-gray-200">
+                  <th className="py-2 font-medium w-1/3">Real Name</th>
+                  <td className="py-2">{signUpData.realName}</td>
+                </tr>
+                <tr className="border-t border-gray-200">
+                  <th className="py-2 font-medium">Job</th>
+                  <td className="py-2">{signUpData.job}</td>
+                </tr>
+                <tr className="border-t border-gray-200">
+                  <th className="py-2 font-medium">X (Twitter)</th>
+                  <td className="py-2 text-blue-500 hover:underline">
+                    <a
+                      href={`https://x.com/${signUpData.xAccount}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      @{signUpData.xAccount}
+                    </a>
+                  </td>
+                </tr>
+                <tr className="border-t border-gray-200">
+                  <th className="py-2 font-medium">BlueSky</th>
+                  <td className="py-2 text-blue-500 hover:underline">
+                    <a
+                      href={`https://bsky.app/profile/${signUpData.blueSkyAccount}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {signUpData.blueSkyAccount}
+                    </a>
+                  </td>
+                </tr>
+                <tr className="border-t border-b border-gray-200">
+                  <th className="py-2 font-medium">Email</th>
+                  <td className="py-2">
+                    <a
+                      href={`mailto:${signUpData.emailAccount}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {signUpData.emailAccount}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="text-center p-8">
+            <Link href="/Xxx">
+              <button className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-green-700 transition-all duration-200">
+                Go to XXX
+              </button>
+            </Link>
+          </div>
         </div>
       )}
       {/* <div>

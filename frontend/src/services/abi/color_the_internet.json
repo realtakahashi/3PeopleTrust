@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x74b1ac08e0d5effd2faae57d2c5fb6bb8d558b2167eac2cd99db8e22ed5326e3",
+    "hash": "0xd6216607feffe99ed58c4f14fc170d8336bc6010358812ae73903410e98df10e",
     "language": "ink! 5.1.1",
     "compiler": "rustc 1.86.0",
     "build_info": {
@@ -1174,6 +1174,15 @@
                           "layout": {
                             "leaf": {
                               "key": "0x64659afc",
+                              "ty": 0
+                            }
+                          },
+                          "name": "xxx_id"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x64659afc",
                               "ty": 1
                             }
                           },
@@ -1280,6 +1289,15 @@
                   "layout": {
                     "struct": {
                       "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x8479956e",
+                              "ty": 0
+                            }
+                          },
+                          "name": "colored_id"
+                        },
                         {
                           "layout": {
                             "leaf": {
@@ -1687,6 +1705,11 @@
           "composite": {
             "fields": [
               {
+                "name": "xxx_id",
+                "type": 0,
+                "typeName": "u128"
+              },
+              {
                 "name": "name",
                 "type": 1,
                 "typeName": "String"
@@ -1854,6 +1877,11 @@
         "def": {
           "composite": {
             "fields": [
+              {
+                "name": "colored_id",
+                "type": 0,
+                "typeName": "u128"
+              },
               {
                 "name": "url",
                 "type": 1,

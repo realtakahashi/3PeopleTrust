@@ -39,6 +39,7 @@ mod color_the_internet {
     )]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     pub struct XXXData {
+        pub xxx_id: u128,
         pub name: String,
         pub tags: String,
         pub owner: AccountId,
@@ -53,6 +54,7 @@ mod color_the_internet {
     )]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     pub struct ColoredData {
+        pub colored_id: u128,
         pub url: String,
         pub owner_approval: bool,
         pub second_member_approval: bool,
@@ -275,6 +277,7 @@ mod color_the_internet {
             let caller = self.env().caller();
             let xxx_id = self.xxx_id;
             let xxx_data = XXXData {
+                xxx_id: xxx_id,
                 name: name.clone(),
                 tags: tags.clone(),
                 owner: caller,
@@ -326,6 +329,7 @@ mod color_the_internet {
             self.xxx_data_list.insert(
                 xxx_id,
                 &XXXData {
+                    xxx_id: xxx_data.xxx_id,
                     name: xxx_data.name.clone(),
                     tags: xxx_data.tags.clone(),
                     owner: xxx_data.owner,
@@ -365,6 +369,7 @@ mod color_the_internet {
             self.xxx_data_list.insert(
                 xxx_id,
                 &XXXData {
+                    xxx_id: xxx_data.xxx_id,
                     name: xxx_data.name.clone(),
                     tags: xxx_data.tags.clone(),
                     owner: xxx_data.owner,
@@ -397,6 +402,7 @@ mod color_the_internet {
             }
             let colored_site_id = xxx_data.colored_site_id;
             let colored_data = ColoredData {
+                colored_id: colored_site_id,
                 url: target_url.clone(),
                 owner_approval: self._is_caller_xxx_owner(&xxx_data),
                 second_member_approval: self._is_caller_xxx_second_member(&xxx_data),
@@ -408,6 +414,7 @@ mod color_the_internet {
             self.xxx_data_list.insert(
                 xxx_id,
                 &XXXData {
+                    xxx_id: xxx_data.xxx_id,
                     name: xxx_data.name.clone(),
                     tags: xxx_data.tags.clone(),
                     owner: xxx_data.owner,
@@ -456,6 +463,7 @@ mod color_the_internet {
             let new_colored_data =  
                 if caller == xxx_data.owner {
                     ColoredData {
+                        colored_id: colored_site.colored_id,
                         url: colored_site.url.clone(),
                         owner_approval: true,
                         second_member_approval: colored_site.second_member_approval,
@@ -465,6 +473,7 @@ mod color_the_internet {
                 }
                 else if xxx_data.second_member.is_some() && Some(caller) == xxx_data.second_member {
                     ColoredData {
+                        colored_id: colored_site.colored_id,
                         url: colored_site.url.clone(),
                         owner_approval: colored_site.owner_approval,
                         second_member_approval: true,
@@ -474,6 +483,7 @@ mod color_the_internet {
                 }
                 else {
                     ColoredData {
+                        colored_id: colored_site.colored_id,
                         url: colored_site.url.clone(),
                         owner_approval: colored_site.owner_approval,
                         second_member_approval: colored_site.second_member_approval,
@@ -527,6 +537,7 @@ mod color_the_internet {
                 return Err(Error::TheUserHasAlreadyVoted);
             }
             let new_colored_data = ColoredData {
+                colored_id: colored_site.colored_id,
                 url: colored_site.url.clone(),
                 owner_approval: colored_site.owner_approval,
                 second_member_approval: colored_site.second_member_approval,

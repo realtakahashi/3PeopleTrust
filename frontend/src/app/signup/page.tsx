@@ -2,11 +2,15 @@
 
 import { useState } from 'react'
 import { PersonalData } from '@/types/ColorContractTypes'
-import { web3Enable, web3Accounts } from '@polkadot/extension-dapp'
-import { useApi } from '@/contexts/ApiContext' // ← ApiPromise を渡す Context
-import { ContractPromise } from '@polkadot/api-contract'
+import { usePolkadot } from "@/contexts/PolkadotContext";
+import { useApi } from "@/contexts/ApiContext";
+import { signUp } from '@/services/colorTheInternetService';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpForm() {
+    const router = useRouter();
+    const { selectedAccount } = usePolkadot();
+    const { api, isReady } = useApi();
     const [formData, setFormData] = useState<PersonalData>({
         realName: '',
         job: '',
@@ -26,6 +30,21 @@ export default function SignUpForm() {
         e.preventDefault()
         setLoading(true)
         setMessage('')
+        if (!isReady){
+          alert("API is not ready.");
+          setLoading(false);
+          return;
+        }
+        if (selectedAccount != null){
+          signUp(api, selectedAccount, formData);
+          setLoading(false);
+          setMessage("Sign up is completed.");
+          router.push('/Xxx');
+        }else {
+          alert("Account is not selected.");
+          setLoading(false);
+          return;
+        }
       }
 
       return (

@@ -42,27 +42,83 @@ export const getGasLimitForNotDeploy = (api: any): any => {
   return gasLimit;
 };
 
+var functionId = 0;
 
-const deploy = async () => {
+const controllerFunction = async () => {
+  switch (functionId){
+    case 0:
+      await initialize();
+      await deployColorTheInternet(controllerFunction);
+      break;
+    case 1:
+      await deployGovernanceToken(controllerFunction);
+      break;
+    case 2:
+      await setGovernanceTokenAddress(controllerFunction);
+      break;
+    case 3:
+      finish();
+      break;
+    default:
+      api.disconnect();
+  }
+}
+
+
+const initialize = async () => {
   const wsProvider = new WsProvider("ws://127.0.0.1:9944");
   api = await ApiPromise.create({ provider: wsProvider });
   keyring = new Keyring({ type: "sr25519" });
   deployer = keyring.addFromUri("//Alice");
 
-  await deployColorTheInternet(governanceContractDeploy)
 }
 
-const governanceContractDeploy = async () => {
-  await deployGovernanceToken(finish);
-}
 
 const finish = async () => {
   console.log("## Finish deploy");
   api.disconnect();
 }
 
+const setGovernanceTokenAddress = async (callBack: () => void) => {
+  functionId = 3;
+  console.log("## Start setGovernanceTokenAddress");
+
+  const contractWasm = ColorContract.source.wasm;
+  const contract = new ContractPromise(
+    api,
+    ColorContractAbi,
+    colorContractAddress
+  );
+  const gasLimit: any = api.registry.createType("WeightV2", {
+    refTime: 3219235328,
+    proofSize: 131072,
+  });
+
+  const { gasRequired } = await contract.query.setGovernanceTokenAddress(
+    deployer.address,
+    { value: 0, gasLimit: gasLimit },
+    governanceContractAddress
+  );
+  const tx = await contract.tx.setGovernanceTokenAddress(
+    { value: 0, gasLimit: gasRequired },
+    governanceContractAddress
+  );
+  //@ts-ignore
+  const unsub = await tx.signAndSend(deployer, ({ events = [], status }) => {
+    if (status.isFinalized) {
+      if (checkEventsAndInculueError(events) == true) {
+        console.log("################# Transaction is failure.");
+      }
+      unsub();
+      console.log("## End setGovernanceTokenAddress");
+      callBack();
+    }
+  });
+};
+
 // deployColorTheInternet
 const deployColorTheInternet = async (callBack: () => void) => {
+    functionId = 1;
     console.log("## Start deployColorTheInternet");
   
     const contractWasm = ColorContract.source.wasm;
@@ -96,6 +152,7 @@ const deployColorTheInternet = async (callBack: () => void) => {
 
 // deployGovernanceToken
 const deployGovernanceToken = async (callBack: () => void) => {
+  functionId = 2;
   console.log("## Start deployGovernanceToken");
 
   const contractWasm = GovernanceContract.source.wasm;
@@ -137,4 +194,4 @@ const deployGovernanceToken = async (callBack: () => void) => {
 };
 
 
-deploy();
+controllerFunction();
