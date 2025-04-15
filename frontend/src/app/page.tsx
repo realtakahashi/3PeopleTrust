@@ -8,6 +8,7 @@ import { getSignUpData } from "@/services/colorTheInternetService";
 import { PersonalData } from "@/types/ColorContractTypes";
 import { sign } from "crypto";
 import Link from "next/link";
+import RightSidebar from "@/components/LeftSidebar";
 
 export default function Home() {
   const { selectedAccount } = usePolkadot();
@@ -16,6 +17,9 @@ export default function Home() {
   // const [blockNumber, setBlockNumber] = useState<string>("");
 
   useEffect(() => {
+    if (selectedAccount != null) {
+      
+    }
     if (!api || !isReady) return;
     const _getSignUpData = async () => {
       console.log("###### _getSignUpData 1");
@@ -31,14 +35,8 @@ export default function Home() {
     };
 
     _getSignUpData();
-
-    // const fetchBlock = async () => {
-    //   const header = await api.rpc.chain.getHeader();
-    //   setBlockNumber(header.number.toString());
-    // };
-
-    // fetchBlock();
-  }, [api, isReady, selectedAccount]);
+  },[]);
+  // }, [api, isReady, selectedAccount]);
 
   return (
     <>
@@ -77,6 +75,10 @@ export default function Home() {
                 <tr className="border-t border-gray-200">
                   <th className="py-2 font-medium w-1/3">Real Name</th>
                   <td className="py-2">{signUpData.realName}</td>
+                </tr>
+                <tr className="border-t border-gray-200">
+                  <th className="py-2 font-medium">Balance Of CIT</th>
+                  <td className="py-2 text-red-400">Todo: Add this function</td>
                 </tr>
                 <tr className="border-t border-gray-200">
                   <th className="py-2 font-medium">Job</th>
@@ -120,13 +122,13 @@ export default function Home() {
               </tbody>
             </table>
           </div>
-          <div className="text-center p-8">
-            <Link href="/Xxx">
+          {/* <div className="text-center p-8">
+            <Link href="/xxx">
               <button className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-green-700 transition-all duration-200">
                 Go to XXX
               </button>
             </Link>
-          </div>
+          </div> */}
         </div>
       )}
       {/* <div>

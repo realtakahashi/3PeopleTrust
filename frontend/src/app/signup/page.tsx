@@ -39,7 +39,7 @@ export default function SignUpForm() {
           signUp(api, selectedAccount, formData);
           setLoading(false);
           setMessage("Sign up is completed.");
-          router.push('/Xxx');
+          router.push('/xxx');
         }else {
           alert("Account is not selected.");
           setLoading(false);

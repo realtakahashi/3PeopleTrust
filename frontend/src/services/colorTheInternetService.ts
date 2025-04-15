@@ -178,3 +178,51 @@ export const getXxxList = async (
 
   return response;
 };
+
+export const createXxx = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  name: string,
+  tags: string
+): Promise<boolean> => {
+  console.log("##### createXxx 1");
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.createXxx(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    name,
+    tags
+  );
+
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.createXxx(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    name,
+    tags
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};
+

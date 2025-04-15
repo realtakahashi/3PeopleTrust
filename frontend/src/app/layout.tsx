@@ -2,16 +2,20 @@
 import './globals.css';
 import { PolkadotProvider } from '@/contexts/PolkadotContext';
 import { ApiProvider } from '@/contexts/ApiContext';
+import LeftSidebar from '@/components/LeftSidebar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+      <div>
+      <LeftSidebar />
         <PolkadotProvider>
           <ApiProvider>
           {children}
           </ApiProvider>
           </PolkadotProvider>
+          </div>
       </body>
     </html>
   );
