@@ -128,7 +128,7 @@ const deployColorTheInternet = async (callBack: () => void) => {
       proofSize: 131072,
     });
   
-    const tx = contract.tx.new({ gasLimit, storageDepositLimit }, 1);
+    const tx = contract.tx.new({ gasLimit, storageDepositLimit }, 1000);
   
     //@ts-ignore
     const unsub = await tx.signAndSend(

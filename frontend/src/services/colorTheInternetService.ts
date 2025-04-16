@@ -8,7 +8,7 @@ import { PersonalData, XXXData } from "@/types/ColorContractTypes";
 import type { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 
 const colorAddress =
-  String(process.env.NEXT_PUBLIC_DAO_ORIENTED_FLIPPER_CONTRACT_ADDRESS) ?? "";
+  String(process.env.NEXT_PUBLIC_COLOR_THE_INTERNET_CONTRACT_ADDRESS) ?? "";
 const storageDepositLimit = null;
 
 export const getSignUpData = async (
@@ -102,16 +102,7 @@ export const getXxxData = async (
   api: any,
   peformanceAddress: string,
   xxxId: Number
-): Promise<XXXData> => {
-  let ressponse: XXXData = {
-    xxxId: 0,
-    name: "",
-    tags: "",
-    owner: "",
-    secondMember: "",
-    thirdMember: "",
-    coloredSiteId: 0,
-  };
+): Promise<XXXData | null> => {
   const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
   const gasLimit: any = getGasLimitForNotDeploy(api);
 
@@ -124,21 +115,25 @@ export const getXxxData = async (
     xxxId
   );
 
-  console.log("###### getSignUpData 2 output: ", output?.toHuman());
+  console.log("###### getXxxData 1 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
     alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
-    return ressponse;
+    return null;
   }
   let response_json = output.toJSON().ok;
   let json_data = JSON.parse(JSON.stringify(response_json));
 
-  ressponse.xxxId = json_data.xxxId;
-  ressponse.name = json_data.name;
-  ressponse.tags = json_data.tags;
-  ressponse.owner = json_data.owner;
-  ressponse.secondMember = json_data.secondMember;
-  ressponse.thirdMember = json_data.thirdMember;
-  ressponse.coloredSiteId = json_data.coloredSiteId;
+  let ressponse: XXXData = {
+    xxxId: json_data.xxxId,
+    name: response_json.ok.name,
+    tags: json_data.ok.tags,
+    owner: json_data.ok.owner,
+    secondMember: json_data.ok.secondMember,
+    thirdMember: json_data.ok.thirdMember,
+    coloredSiteId: json_data.ok.coloredSiteId,
+  };
+
+  console.log("###### getXxxData 1 ressponse: ", ressponse);
 
   return ressponse;
 };
@@ -226,3 +221,95 @@ export const createXxx = async (
   return true;
 };
 
+export const addSecondMember = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  xxxId: string,
+  secondMember: string,
+): Promise<boolean> => {
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.addSecondMember(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    xxxId,
+    secondMember
+  );
+
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    console.log("###### addSecondMember output: ", output?.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.addSecondMember(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    xxxId,
+    secondMember
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};
+
+export const addThirdMember = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  xxxId: string,
+  thirdMember: string,
+): Promise<boolean> => {
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.addThirdMember(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    xxxId,
+    thirdMember
+  );
+
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.addThirdMember(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    xxxId,
+    thirdMember
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};

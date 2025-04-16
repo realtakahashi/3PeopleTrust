@@ -9,18 +9,17 @@ import { PersonalData } from "@/types/ColorContractTypes";
 import { sign } from "crypto";
 import Link from "next/link";
 import RightSidebar from "@/components/LeftSidebar";
+import { getBalance } from "@/services/GovernanceTokenService";
 
 export default function Home() {
   const { selectedAccount } = usePolkadot();
   const { api, isReady } = useApi();
   const [signUpData, setSignUpData] = useState<PersonalData | null>(null);
-  // const [blockNumber, setBlockNumber] = useState<string>("");
+  const [balance, setBalance] = useState<string>("");
 
   useEffect(() => {
-    if (selectedAccount != null) {
-      
-    }
     if (!api || !isReady) return;
+
     const _getSignUpData = async () => {
       console.log("###### _getSignUpData 1");
       if (selectedAccount != null) {
@@ -34,8 +33,19 @@ export default function Home() {
       }
     };
 
+    const _getBalance = async () => {
+      if (selectedAccount != null){
+        const value = await getBalance(
+          api,
+          String(selectedAccount.address) ?? ""
+        )
+        setBalance(value);
+      }
+    }
+
     _getSignUpData();
-  },[]);
+    _getBalance();
+  },[,api, isReady, selectedAccount]);
   // }, [api, isReady, selectedAccount]);
 
   return (
@@ -78,7 +88,7 @@ export default function Home() {
                 </tr>
                 <tr className="border-t border-gray-200">
                   <th className="py-2 font-medium">Balance Of CIT</th>
-                  <td className="py-2 text-red-400">Todo: Add this function</td>
+                  <td className="py-2 font-bold text-green-400">{balance}</td>
                 </tr>
                 <tr className="border-t border-gray-200">
                   <th className="py-2 font-medium">Job</th>

@@ -8,7 +8,6 @@ import { signUp } from '@/services/colorTheInternetService';
 import { useRouter } from 'next/navigation';
 
 export default function SignUpForm() {
-    const router = useRouter();
     const { selectedAccount } = usePolkadot();
     const { api, isReady } = useApi();
     const [formData, setFormData] = useState<PersonalData>({
@@ -39,7 +38,6 @@ export default function SignUpForm() {
           signUp(api, selectedAccount, formData);
           setLoading(false);
           setMessage("Sign up is completed.");
-          router.push('/xxx');
         }else {
           alert("Account is not selected.");
           setLoading(false);
@@ -70,7 +68,7 @@ export default function SignUpForm() {
           >
             {loading ? 'Submitting...' : 'Submit'}
           </button>
-          {message && <p className="text-center mt-2 text-sm text-gray-600">{message}</p>}
+          {message && <p className="text-center mt-2 text-sm text-orange-600">{message}</p>}
         </form>
       )
     }
