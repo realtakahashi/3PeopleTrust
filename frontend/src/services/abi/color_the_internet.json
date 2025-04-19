@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xd6216607feffe99ed58c4f14fc170d8336bc6010358812ae73903410e98df10e",
+    "hash": "0x85211d75f1e107c51d025ce027736c64dbd4867b35be8d95c224edf9c702a85b",
     "language": "ink! 5.1.1",
     "compiler": "rustc 1.86.0",
     "build_info": {
@@ -2313,22 +2313,26 @@
               },
               {
                 "index": 12,
-                "name": "TheXXXHasSameSite"
+                "name": "AlreadyApproved"
               },
               {
                 "index": 13,
-                "name": "TheSiteDoesNotExist"
+                "name": "TheXXXHasSameSite"
               },
               {
                 "index": 14,
-                "name": "TheTargetSiteIsNotApproved"
+                "name": "TheSiteDoesNotExist"
               },
               {
                 "index": 15,
-                "name": "TheUserHasAlreadyVoted"
+                "name": "TheTargetSiteIsNotApproved"
               },
               {
                 "index": 16,
+                "name": "TheUserHasAlreadyVoted"
+              },
+              {
+                "index": 17,
                 "name": "CallingGovernanceTokenFunctionFailed"
               }
             ]

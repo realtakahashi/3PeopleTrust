@@ -167,6 +167,8 @@ mod color_the_internet {
         OnlyXXXMembersCanAgree,
         /// Already proposed
         AlreadyProposed,
+        /// Already approved
+        AlreadyApproved,
         /// The xxx has same site.
         TheXXXHasSameSite,
         /// The site does not exist.
@@ -460,6 +462,25 @@ mod color_the_internet {
             };
 
             let caller = self.env().caller();
+            if caller == xxx_data.owner {
+                if colored_site.owner_approval == true {
+                    return Err(Error::AlreadyApproved);
+                }
+            }
+            else if Some(caller) == xxx_data.second_member{
+                if colored_site.second_member_approval == true {
+                    return Err(Error::AlreadyApproved);
+                }
+            }
+            else if Some(caller) == xxx_data.third_member{
+                if colored_site.third_member_approval == true {
+                    return Err(Error::AlreadyApproved);
+                }
+            }
+            else {
+                return Err(Error::OnlyXXXMembersCanAgree);
+            }
+            
             let new_colored_data =  
                 if caller == xxx_data.owner {
                     ColoredData {

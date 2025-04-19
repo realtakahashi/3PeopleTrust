@@ -29,7 +29,7 @@ export const getBalance = async (
 
   console.log("###### getBalance 1 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return "0";
   }
   let response_json = output.toJSON().ok;

@@ -29,7 +29,7 @@ export const getSignUpData = async (
 
   console.log("###### getSignUpData 2 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return null;
   }
   let response_json = output.toJSON().ok;
@@ -69,7 +69,7 @@ export const signUp = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -117,7 +117,7 @@ export const getXxxData = async (
 
   console.log("###### getXxxData 1 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return null;
   }
   let response_json = output.toJSON().ok;
@@ -153,7 +153,7 @@ export const getXxxList = async (
 
   console.log("###### getSignUpData 2 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return response;
   }
   let response_json = output.toJSON().ok;
@@ -195,7 +195,7 @@ export const createXxx = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -241,8 +241,7 @@ export const addSecondMember = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    console.log("###### addSecondMember output: ", output?.toHuman());
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -288,7 +287,7 @@ export const addThirdMember = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -334,7 +333,7 @@ export const getColoredList = async (
 
   console.log("###### getSignUpData 2 output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return response;
   }
   let response_json = output.toJSON().ok;
@@ -379,7 +378,7 @@ export const approveColoredData = async (
 
   console.log("###### approveColoredData output: ", output?.toHuman());
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -425,7 +424,7 @@ export const voteColoredData = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
@@ -471,7 +470,7 @@ export const proposeColorTheSite = async (
   );
 
   if (output?.toHuman()?.Ok.Err != undefined) {
-    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err);
     return false;
   }
 
