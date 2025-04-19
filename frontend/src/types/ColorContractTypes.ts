@@ -17,10 +17,10 @@ export interface XXXData {
 }
 
 export interface ColoredData {
-    coloredId: Number,
+    coloredId: string,
     url: string,
     owner_approval: Boolean,
     second_member_approval: Boolean,
     third_member_approval: Boolean,
-    vote_count: Number,
+    vote_count: string,
 }

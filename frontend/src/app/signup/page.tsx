@@ -35,7 +35,7 @@ export default function SignUpForm() {
           return;
         }
         if (selectedAccount != null){
-          signUp(api, selectedAccount, formData);
+          await signUp(api, selectedAccount, formData);
           setLoading(false);
           setMessage("Sign up is completed.");
         }else {

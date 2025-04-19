@@ -4,7 +4,6 @@ import { useApi } from "@/contexts/ApiContext";
 import { usePolkadot } from "@/contexts/PolkadotContext";
 import { getXxxList } from "@/services/colorTheInternetService";
 import { XXXData } from "@/types/ColorContractTypes";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Xxx() {

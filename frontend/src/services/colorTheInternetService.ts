@@ -4,7 +4,7 @@ import {
   getGasLimitForNotDeploy,
   checkEventsAndInculueError,
 } from "./serviceUtils";
-import { PersonalData, XXXData } from "@/types/ColorContractTypes";
+import { ColoredData, PersonalData, XXXData } from "@/types/ColorContractTypes";
 import type { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 
 const colorAddress =
@@ -225,7 +225,7 @@ export const addSecondMember = async (
   api: any,
   performingAccount: InjectedAccountWithMeta,
   xxxId: string,
-  secondMember: string,
+  secondMember: string
 ): Promise<boolean> => {
   const { web3FromSource } = await import("@polkadot/extension-dapp");
 
@@ -272,7 +272,7 @@ export const addThirdMember = async (
   api: any,
   performingAccount: InjectedAccountWithMeta,
   xxxId: string,
-  thirdMember: string,
+  thirdMember: string
 ): Promise<boolean> => {
   const { web3FromSource } = await import("@polkadot/extension-dapp");
 
@@ -296,6 +296,189 @@ export const addThirdMember = async (
     { value: 0, gasLimit: gasRequired, storageDepositLimit },
     xxxId,
     thirdMember
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};
+
+export const getColoredList = async (
+  api: any,
+  peformanceAddress: string,
+  xxx_id: string
+): Promise<Array<ColoredData>> => {
+  let response: ColoredData[] = [];
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const { output } = await contract.query.getColoredDataListForXxx(
+    peformanceAddress,
+    {
+      value: 0,
+      gasLimit: gasLimit,
+    },
+    xxx_id
+  );
+
+  console.log("###### getSignUpData 2 output: ", output?.toHuman());
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return response;
+  }
+  let response_json = output.toJSON().ok;
+  let json_data = JSON.parse(JSON.stringify(response_json));
+
+  console.log("###### getColoredList coloreddata:", json_data)
+
+  for (let i = 0; i < json_data.length; i++) {
+    const coloredData: ColoredData = {
+      coloredId: json_data[i].coloredId,
+      url: json_data[i].url,
+      owner_approval: json_data[i].ownerApproval,
+      second_member_approval: json_data[i].secondMemberApproval,
+      third_member_approval: json_data[i].thirdMemberApproval,
+      vote_count: json_data[i].voteCount,
+    };
+    console.log("###### getColoredList coloreddata:", coloredData)
+    response.push(coloredData);
+  }
+
+  return response;
+};
+
+export const approveColoredData = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  xxxId: string,
+  coloredId: string
+): Promise<boolean> => {
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.approveColorTheSite(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    xxxId,
+    coloredId
+  );
+
+  console.log("###### approveColoredData output: ", output?.toHuman());
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.approveColorTheSite(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    xxxId,
+    coloredId
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};
+
+export const voteColoredData = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  xxxId: string,
+  coloredId: string
+): Promise<boolean> => {
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.voteToColorTheSite(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    xxxId,
+    coloredId
+  );
+
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.voteToColorTheSite(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    xxxId,
+    coloredId
+  );
+  if (injector !== undefined) {
+    const unsub = await tx.signAndSend(
+      performingAccount.address,
+      { signer: injector.signer },
+      ({ status, events = [] }) => {
+        if (status.isFinalized) {
+          if (checkEventsAndInculueError(events)) {
+            alert("Transaction is failure.");
+          }
+          unsub();
+        }
+      }
+    );
+  }
+  return true;
+};
+
+export const proposeColorTheSite = async (
+  api: any,
+  performingAccount: InjectedAccountWithMeta,
+  xxxId: string,
+  targetUrl: string
+): Promise<boolean> => {
+  const { web3FromSource } = await import("@polkadot/extension-dapp");
+
+  const contract = new ContractPromise(api, colorTheInternetAbi, colorAddress);
+  const gasLimit: any = getGasLimitForNotDeploy(api);
+
+  const injector = await web3FromSource(performingAccount.meta.source);
+  const { output, gasRequired } = await contract.query.proposeColorTheSite(
+    performingAccount.address,
+    { value: 0, gasLimit: gasLimit, storageDepositLimit },
+    xxxId,
+    targetUrl
+  );
+
+  if (output?.toHuman()?.Ok.Err != undefined) {
+    alert("Error is occured: " + output?.toHuman()?.Ok.Err.toHuman());
+    return false;
+  }
+
+  const tx = await contract.tx.proposeColorTheSite(
+    { value: 0, gasLimit: gasRequired, storageDepositLimit },
+    xxxId,
+    targetUrl
   );
   if (injector !== undefined) {
     const unsub = await tx.signAndSend(

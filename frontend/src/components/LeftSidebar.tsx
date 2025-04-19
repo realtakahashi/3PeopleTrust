@@ -32,6 +32,7 @@ export default function LeftSidebar() {
           <Link href="/colortheinternet/propose" className="block text-gray-700 hover:text-blue-600 hover:font-semibold transition">
           &nbsp;&nbsp;&nbsp;Propose
           </Link>
+
         </nav>
       </div>
     </aside>
