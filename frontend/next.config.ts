@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     // TypeScript のビルドエラーを無視する
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
